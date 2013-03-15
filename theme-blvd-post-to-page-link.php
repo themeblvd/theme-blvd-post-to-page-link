@@ -51,20 +51,45 @@ add_filter( 'themeblvd_post_meta', 'themeblvd_ptp_post_meta' );
 
 function themeblvd_get_breadcrumbs() {
 	global $post;
-	// Filterable attributes
-	$atts = array(
-		'delimiter' => '&raquo;',
-		'home' => themeblvd_get_local('home'),
-		'home_link' => home_url(),
-		'before' => '<span class="current">',
-		'after' => '</span>'
-	);
-	$atts = apply_filters( 'themeblvd_breadcrumb_atts', $atts );
-	// Start output
-	$output = '<div id="breadcrumbs">';
-	$output .= '<div class="breadcrumbs-inner">';
-	$output .= '<div class="breadcrumbs-content">';
-	$output .= '<a href="'.$atts['home_link'].'" class="home-link" title="'.$atts['home'].'">'.$atts['home'].'</a>'.$atts['delimiter'].' ';
+	
+	if( defined('TB_FRAMEWORK_VERSION') && version_compare( TB_FRAMEWORK_VERSION, '2.2.0', '>=' ) ) {
+
+		// Filterable attributes
+		$atts = array(
+			'delimiter' => ' <span class="divider">/</span>',
+			'home' => themeblvd_get_local('home'),
+			'home_link' => home_url(),
+			'before' => '<span class="current">',
+			'after' => '</span>'
+		);
+		$atts = apply_filters( 'themeblvd_breadcrumb_atts', $atts );
+		
+		// Start output
+		$output = '<div id="breadcrumbs">'; 
+		$output .= '<div class="breadcrumbs-inner">';
+		$output .= '<div class="breadcrumbs-content">';
+		$output .= '<div class="breadcrumb">'; // This enables bootstrap styles
+		$output .= '<a href="'.$atts['home_link'].'" class="home-link" title="'.$atts['home'].'">'.$atts['home'].'</a>'.$atts['delimiter'].' ';
+	
+	} else {
+
+		// Filterable attributes
+		$atts = array(
+			'delimiter' => '&raquo;',
+			'home' => themeblvd_get_local('home'),
+			'home_link' => home_url(),
+			'before' => '<span class="current">',
+			'after' => '</span>'
+		);
+		$atts = apply_filters( 'themeblvd_breadcrumb_atts', $atts );
+		// Start output
+		$output = '<div id="breadcrumbs">';
+		$output .= '<div class="breadcrumbs-inner">';
+		$output .= '<div class="breadcrumbs-content">';
+		$output .= '<a href="'.$atts['home_link'].'" class="home-link" title="'.$atts['home'].'">'.$atts['home'].'</a>'.$atts['delimiter'].' ';
+	
+	}
+
 	if ( is_category() ) {
 		global $wp_query;
 		$cat_obj = $wp_query->get_queried_object();
@@ -169,8 +194,20 @@ function themeblvd_get_breadcrumbs() {
 		$output .= themeblvd_get_local('page').' '.get_query_var('paged');
 		if ( is_category() || is_day() || is_month() || is_year() || is_search() || is_tag() || is_author() ) $output .= ')';
 	}
-	$output .= '</div><!-- .breadcrumbs-content (end) -->';
-	$output .= '</div><!-- .breadcrumbs-inner (end) -->';
-	$output .= '</div><!-- #breadcrumbs (end) -->';
+
+	if( defined('TB_FRAMEWORK_VERSION') && version_compare( TB_FRAMEWORK_VERSION, '2.2.0', '>=' ) ) {
+
+		$output .= '</div><!-- .breadcrumb (end) -->';
+		$output .= '</div><!-- .breadcrumbs-content (end) -->';
+		$output .= '</div><!-- .breadcrumbs-inner (end) -->';
+		$output .= '</div><!-- #breadcrumbs (end) -->';
+		
+	} else {
+
+		$output .= '</div><!-- .breadcrumbs-content (end) -->';
+		$output .= '</div><!-- .breadcrumbs-inner (end) -->';
+		$output .= '</div><!-- #breadcrumbs (end) -->';
+
+	}
 	return $output;
 }
