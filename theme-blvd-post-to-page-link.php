@@ -2,7 +2,7 @@
 /*
 Plugin Name: Theme Blvd Post-to-Page Link
 Description: Link a post to a page to effect its breadcrumb trail when using a Theme Blvd theme.
-Version: 1.0.0
+Version: 1.0.1
 Author: Jason Bobich
 Author URI: http://jasonbobich.com
 License: GPL2

@@ -3,7 +3,7 @@ Contributors: themeblvd
 Tags: breadcrumbs, themeblvd
 Requires at least: 3.2
 Tested up to: 3.3.1
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 
 Link a post to a page to effect its breadcrumb trail when using a Theme Blvd theme.
 
@@ -21,6 +21,8 @@ In this case, by linking these posts to a page, it will allow them to maintain t
 2. Activate the plugin through the "Plugins" menu in WordPress
 
 == Changelog ==
+
+= 1.0.1 =
 
 = 1.0.0 =
 
