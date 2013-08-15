@@ -9,10 +9,10 @@ License: GPL2
 */
 
 /*
-Copyright 2012 JASON BOBICH
+Copyright 2013 JASON BOBICH
 
 This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License, version 2, as 
+it under the terms of the GNU General Public License, version 2, as
 published by the Free Software Foundation.
 
 This program is distributed in the hope that it will be useful,
@@ -29,8 +29,11 @@ define( 'TB_PTP_PLUGIN_VERSION', '1.1.0' );
 define( 'TB_PTP_PLUGIN_DIR', dirname( __FILE__ ) );
 define( 'TB_PTP_PLUGIN_URI', plugins_url( '' , __FILE__ ) );
 
-/* Add option to framework's Post Options meta box.  */
-
+/**
+ * Add option to framework's Post Options meta box.
+ *
+ * @since 1.0.0
+ */
 function themeblvd_ptp_post_meta( $setup ) {
 	$pages = get_pages();
 	$pages_select = array( '' => ' - None - ' );
@@ -51,11 +54,14 @@ function themeblvd_ptp_post_meta( $setup ) {
 }
 add_filter( 'themeblvd_post_meta', 'themeblvd_ptp_post_meta' );
 
-/* Override framework's themeblvd_get_breadcrumbs function. */
-
+/**
+ * Override framework's themeblvd_get_breadcrumbs function.
+ *
+ * @since 1.0.0
+ */
 function themeblvd_get_breadcrumbs() {
 	global $post;
-	
+
 	if( defined('TB_FRAMEWORK_VERSION') && version_compare( TB_FRAMEWORK_VERSION, '2.2.0', '>=' ) ) {
 
 		// Filterable attributes
@@ -67,14 +73,14 @@ function themeblvd_get_breadcrumbs() {
 			'after' => '</span>'
 		);
 		$atts = apply_filters( 'themeblvd_breadcrumb_atts', $atts );
-		
+
 		// Start output
-		$output = '<div id="breadcrumbs">'; 
+		$output = '<div id="breadcrumbs">';
 		$output .= '<div class="breadcrumbs-inner">';
 		$output .= '<div class="breadcrumbs-content">';
 		$output .= '<div class="breadcrumb">'; // This enables bootstrap styles
 		$output .= '<a href="'.$atts['home_link'].'" class="home-link" title="'.$atts['home'].'">'.$atts['home'].'</a>'.$atts['delimiter'].' ';
-	
+
 	} else {
 
 		// Filterable attributes
@@ -91,7 +97,7 @@ function themeblvd_get_breadcrumbs() {
 		$output .= '<div class="breadcrumbs-inner">';
 		$output .= '<div class="breadcrumbs-content">';
 		$output .= '<a href="'.$atts['home_link'].'" class="home-link" title="'.$atts['home'].'">'.$atts['home'].'</a>'.$atts['delimiter'].' ';
-	
+
 	}
 
 	if ( is_category() ) {
@@ -112,18 +118,18 @@ function themeblvd_get_breadcrumbs() {
 	} else if ( is_year() ) {
 		$output .= $atts['before'].get_the_time('Y').$atts['after'];
 	} else if ( is_single() ) {
-		
+
 		/*--------------------------------*/
 		/*	Modification (start)
 		/*--------------------------------*/
-		
+
 		// Grab linked page option
 		$linked_page_id = get_post_meta( $post->ID, '_tb_ptp_page', true );
 		// Show breadcrumbs for single post depending on if the option exists or not.
 		if( $linked_page_id ) {
 			// Show breadcrumb trail of linked page
 			$linked_page = get_page($linked_page_id);
-			
+
 			if ( ! $linked_page->post_parent ) {
 				$output .= '<a href="'.get_permalink($linked_page->ID).'">'.$linked_page->post_title.'</a> '.$atts['delimiter'].' '.$atts['before'].get_the_title().$atts['after'];
 			} else {
@@ -152,11 +158,11 @@ function themeblvd_get_breadcrumbs() {
 				$output .= $atts['before'].get_the_title().$atts['after'];
 			}
 		}
-		
+
 		/*--------------------------------*/
 		/*	Modification (end)
 		/*--------------------------------*/
-		
+
 	} else if ( is_search() ) {
 		$output .= $atts['before'].themeblvd_get_local('crumb_search').' "'.get_search_query().'"'.$atts['after'];
 	} else if ( !is_single() && !is_page() && get_post_type() != 'post' && !is_404() ) {
@@ -205,7 +211,7 @@ function themeblvd_get_breadcrumbs() {
 		$output .= '</div><!-- .breadcrumbs-content (end) -->';
 		$output .= '</div><!-- .breadcrumbs-inner (end) -->';
 		$output .= '</div><!-- #breadcrumbs (end) -->';
-		
+
 	} else {
 
 		$output .= '</div><!-- .breadcrumbs-content (end) -->';
