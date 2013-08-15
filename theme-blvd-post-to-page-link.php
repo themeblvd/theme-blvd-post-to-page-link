@@ -2,7 +2,7 @@
 /*
 Plugin Name: Theme Blvd Post-to-Page Link
 Description: Link a post to a page to effect its breadcrumb trail when using a Theme Blvd theme.
-Version: 1.0.1
+Version: 1.1.0
 Author: Jason Bobich
 Author URI: http://jasonbobich.com
 License: GPL2
@@ -24,6 +24,10 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+
+define( 'TB_PTP_PLUGIN_VERSION', '1.1.0' );
+define( 'TB_PTP_PLUGIN_DIR', dirname( __FILE__ ) );
+define( 'TB_PTP_PLUGIN_URI', plugins_url( '' , __FILE__ ) );
 
 /* Add option to framework's Post Options meta box.  */
 
