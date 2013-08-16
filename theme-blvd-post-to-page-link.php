@@ -63,29 +63,29 @@ add_filter( 'themeblvd_post_meta', 'themeblvd_ptp_post_meta' );
  */
 
 function themeblvd_ptp_breadcrumb_parts( $parts ) {
-    
+
     global $post;
-    
+
     if ( is_single() ) {
-        
+
         // Grab linked page option
 		$linked_page_id = get_post_meta( $post->ID, '_tb_ptp_page', true );
-		
+
         // Check if user selected a linked page
 		if( $linked_page_id ) {
-            
+
             // Reset current breadcrumbs trail
             $parts = array();
-            
+
             // Get page object for linked page
             $linked_page = get_page( $linked_page_id );
 
-            // Add any parent pages of the linked page            
+            // Add any parent pages of the linked page
             if ( $linked_page->post_parent ) {
 
                 $parent_id = $linked_page->post_parent;
                 $parents = array();
-    
+
                 while ( $parent_id ) {
                     $page = get_page( $parent_id );
                     $parents[] = array(
@@ -95,33 +95,33 @@ function themeblvd_ptp_breadcrumb_parts( $parts ) {
                     );
                     $parent_id = $page->post_parent;
                 }
-    
+
                 $parents = array_reverse( $parents );
                 $parts = array_merge( $parts, $parents );
-    
+
             }
-            
+
             // Add linked page
             $parts[] = array(
                 'link' 	=> get_permalink( $linked_page_id ),
                 'text' 	=> get_the_title( $linked_page_id ),
                 'type'	=> 'page'
             );
-            
+
             // Add current single post
             $parts[] = array(
                 'link' 	=> '',
                 'text' 	=> get_the_title(),
                 'type'	=> 'single'
             );
-            
+
         }
-    
+
     }
-    
+
     return $parts;
-    
-}    
+
+}
 add_filter( 'themeblvd_pre_breadcrumb_parts', 'themeblvd_ptp_breadcrumb_parts' );
 
 /**
