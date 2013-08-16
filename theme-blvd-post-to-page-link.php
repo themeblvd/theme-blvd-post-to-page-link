@@ -55,11 +55,84 @@ function themeblvd_ptp_post_meta( $setup ) {
 add_filter( 'themeblvd_post_meta', 'themeblvd_ptp_post_meta' );
 
 /**
+ * Filter in breadcrumb mods.
+ *
+ * NOTE: This is for Theme Blvd Framework 2.3+.
+ *
+ * @since 1.1.0
+ */
+
+function themeblvd_ptp_breadcrumb_parts( $parts ) {
+    
+    global $post;
+    
+    if ( is_single() ) {
+        
+        // Grab linked page option
+		$linked_page_id = get_post_meta( $post->ID, '_tb_ptp_page', true );
+		
+        // Check if user selected a linked page
+		if( $linked_page_id ) {
+            
+            // Reset current breadcrumbs trail
+            $parts = array();
+            
+            // Get page object for linked page
+            $linked_page = get_page( $linked_page_id );
+
+            // Add any parent pages of the linked page            
+            if ( $linked_page->post_parent ) {
+
+                $parent_id = $linked_page->post_parent;
+                $parents = array();
+    
+                while ( $parent_id ) {
+                    $page = get_page( $parent_id );
+                    $parents[] = array(
+                        'link' 	=> get_permalink( $page->ID ),
+                        'text' 	=> get_the_title( $page->ID ),
+                        'type'	=> 'page'
+                    );
+                    $parent_id = $page->post_parent;
+                }
+    
+                $parents = array_reverse( $parents );
+                $parts = array_merge( $parts, $parents );
+    
+            }
+            
+            // Add linked page
+            $parts[] = array(
+                'link' 	=> get_permalink( $linked_page_id ),
+                'text' 	=> get_the_title( $linked_page_id ),
+                'type'	=> 'page'
+            );
+            
+            // Add current single post
+            $parts[] = array(
+                'link' 	=> '',
+                'text' 	=> get_the_title(),
+                'type'	=> 'single'
+            );
+            
+        }
+    
+    }
+    
+    return $parts;
+    
+}    
+add_filter( 'themeblvd_pre_breadcrumb_parts', 'themeblvd_ptp_breadcrumb_parts' );
+
+/**
  * Override framework's themeblvd_get_breadcrumbs function.
+ *
+ * NOTE: This is only for Theme Blvd Framework v2.0-2.2
  *
  * @since 1.0.0
  */
 function themeblvd_get_breadcrumbs() {
+
 	global $post;
 
 	if( defined('TB_FRAMEWORK_VERSION') && version_compare( TB_FRAMEWORK_VERSION, '2.2.0', '>=' ) ) {

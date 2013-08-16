@@ -22,6 +22,8 @@ In this case, by linking these posts to a page, it will allow them to maintain t
 
 = 1.1.0 =
 
+* Plugin re-written for Theme Blvd framework v2.3+ (will still work with older versions).
+
 = 1.0.1 =
 
 * Added formatting for Jump Start 1.0.0 (framework v2.2.0). -- This is just a temporary update. Once Jump Start and all other themes are updated to framework v2.2.1, we can re-do this plugin to be much, much cleaner.
