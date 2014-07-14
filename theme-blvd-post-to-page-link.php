@@ -122,7 +122,7 @@ function themeblvd_ptp_breadcrumb_parts( $parts ) {
     return $parts;
 
 }
-add_filter( 'themeblvd_pre_breadcrumb_parts', 'themeblvd_ptp_breadcrumb_parts' );
+add_filter( 'themeblvd_pre_breadcrumb_parts', 'themeblvd_ptp_breadcrumb_parts', 11 );
 
 /**
  * Override framework's themeblvd_get_breadcrumbs function.

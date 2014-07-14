@@ -22,6 +22,8 @@ In this case, by linking these posts to a page, it will allow them to maintain t
 
 = 1.1.1 =
 
+* Fix to work with Portfolio Items in [Portfolios](http://wordpress.org/plugins/portfolios/) plugin.
+
 = 1.1.0 =
 
 * Plugin re-written for Theme Blvd framework v2.3+ (will still work with older versions).
